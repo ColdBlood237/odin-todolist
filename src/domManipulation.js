@@ -1,4 +1,6 @@
 const sidebarDiv = document.querySelector(".sidebar");
+const mainDiv = document.querySelector(".main");
+const contentTitle = document.querySelector(".content-title");
 
 const hideSidebar = () => {
   if (sidebarDiv.style.display !== "none") {
@@ -8,4 +10,8 @@ const hideSidebar = () => {
   }
 };
 
-export { hideSidebar };
+const changeContentTitle = (sidebarChoice) => {
+  contentTitle.textContent = sidebarChoice.textContent;
+};
+
+export { hideSidebar, changeContentTitle };
