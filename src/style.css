@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Alata&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --header-bg-color: #f2f3f5;
+  --sidebar-bg-color: #fefcfe;
+  --main-bg-color: #ececec;
+  --green: #2ecc71;
+  --btn-hover-color: rgba(128, 128, 128, 0.267);
+}
+
+html,
+body {
+  margin: 0;
+  font-family: "Alata", sans-serif;
+  height: 100%;
+}
+
+/*/////////////////////////////// HEADER ////////////////////////////////////////*/
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: var(--header-bg-color);
+  border-bottom: 2px solid var(--green);
+}
+
+.sidebar-btn {
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  padding: 8px 12px;
+}
+
+.sidebar-btn:hover {
+  background-color: var(--btn-hover-color);
+}
+
+h1 {
+  font-weight: 700;
+}
+
+h1 span {
+  color: var(--green);
+}
+
+.form-check-input:checked {
+  background-color: var(--green);
+  border-color: pink;
+}
+
+/*/////////////////////////////// SIDEBAR ////////////////////////////////////*/
+
+.flexdiv {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  flex: 1;
+  /* width: 20%; */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar-bg-color);
+  padding: 16px 16px;
+}
+
+hr {
+  height: 2px;
+  background-color: black;
+}
+
+.sidebar button {
+  display: flex;
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  margin: 8px 0;
+}
+
+.sidebar img {
+  width: 32px;
+  margin: 0 4px;
+}
+
+.sidebar button:hover {
+  background-color: var(--header-bg-color);
+}
+
+h3:nth-child(7) {
+  margin-top: 16px;
+}
+
+/*///////////////////////////////// MAIN ///////////////////////////////////*/
+
+.main {
+  flex: 5;
+  background-color: var(--main-bg-color);
+}
+
+.content {
+  margin: 32px;
+}
+
+.content-title {
+  background-color: var(--green);
+  font-size: 3rem;
+  color: white;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.content p {
+  text-align: center;
+  font-size: 1.3rem;
+}
