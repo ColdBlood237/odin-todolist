@@ -45,7 +45,16 @@
                 <hr>
                 <div class="projects-container">
                 </div>
-                <button>
+                <form action="" method="post" class="add-project-form">
+                    <label for="projectNameInput"><i class="fa-solid fa-bars fa-lg"></i></label>
+                    <input type="text" name="projectNameInput" id="projectNameInput" placeholder="Enter Project Name"
+                        required>
+                    <div>
+                        <button id="submit-project" type="submit">Add</button>
+                        <button class="close-project-form">Cancel</button>
+                    </div>
+                </form>
+                <button class="add-project">
                     <img src="https://img.icons8.com/color/48/null/add--v1.png" />
                     <span>Add Project</span>
                 </button>
