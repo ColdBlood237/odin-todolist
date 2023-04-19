@@ -25,13 +25,20 @@ const renderProjectsList = (list) => {
   });
   list.forEach((project) => {
     const projectBtn = document.createElement("button");
-    projectBtn.classList.add(...[`project-btn`]);
-    const projectIcon = document.createElement("i");
-    projectIcon.classList.add(...["fa-solid", "fa-bars", "fa-lg"]);
-    const projectName = document.createElement("span");
-    projectName.textContent = project.name;
-    projectBtn.append(projectIcon, projectName);
+    projectBtn.classList.add(...[`project-btn`, `project-${projectId}`]);
+    projectBtn.innerHTML = `<div>
+                              <i class='fa-solid fa-bars fa-lg'></i>
+                              <span class="project-name">${project.name}</span>
+                            </div>
+                            <div class="edit-project-container">
+                              <div class='project-popup popup-${projectId}'>
+                                <button>Rename</button>
+                                <button>Delete</button>
+                              </div>
+                                <i class='fa-solid fa-ellipsis-vertical edit-project edit-project-${projectId}'></i>
+                            </div>`;
     projectsContainer.append(projectBtn);
+    projectId++;
   });
 };
 
@@ -152,7 +159,7 @@ const renderTasks = (selection, list) => {
   } else if (selection.classList[0] === "project-btn") {
     let taskId = 0;
     list.forEach((project) => {
-      if (project.name == selection.textContent) {
+      if (project.id == selection.classList[1]) {
         project.todolist.forEach((task) => {
           taskFound = true;
           task.id = taskId;
@@ -181,5 +188,7 @@ const renderTasks = (selection, list) => {
     tasksContainer.innerHTML = "<p>Yay! No Tasks!</p>";
   }
 };
+
+const popupEditProject = () => {};
 
 export { hideSidebar, changeContentTitle, renderProjectsList, renderTasks };

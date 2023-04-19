@@ -24,9 +24,9 @@ const defaultTask = todoFactory("some title", "some description", Date.now());
 const testTask = todoFactory("test", "test details", new Date("2017-01-26"));
 testTask.hasPriority = true;
 
-const defaultProject = projectFactory("Default Project");
+const defaultProject = projectFactory("Default Project", "project-0");
 defaultProject.addTodo(defaultTask);
-const testProject = projectFactory("Test Project");
+const testProject = projectFactory("Test Project", "project-1");
 testProject.addTodo(testTask);
 
 projectsList.push(defaultProject);
@@ -58,7 +58,10 @@ addProjectForm.addEventListener("submit", (e) => {
   addProjectForm.style.display = "none";
   renderProjectsList(projectsList);
   projectBtns = document.querySelectorAll(".project-btn");
+  editProjectBtns = document.querySelectorAll(".edit-project");
+  projectPopups = document.querySelectorAll(".project-popup");
   addEventListenerOnProjectsBtns();
+  addEventListenersOnEditProjects();
 });
 
 closeProjectForm.addEventListener("click", () => {
@@ -78,18 +81,51 @@ function validateForm(name) {
   }
 }
 
+let projectId = 2;
 function createProject(name) {
-  projectsList.push(projectFactory(name));
+  projectsList.push(projectFactory(name, `project-${projectId}`));
+  projectId++;
 }
 
 function addEventListenerOnProjectsBtns() {
   projectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      changeContentTitle(btn);
+    btn.addEventListener("click", (e) => {
+      changeContentTitle(btn.querySelector(".project-name"));
       renderTasks(btn, projectsList);
     });
   });
 }
 
+function addEventListenersOnEditProjects() {
+  editProjectBtns.forEach((btn) => {
+    btn.addEventListener("click", openEditProjectPopup);
+  });
+}
+
+let editProjectPopupFlag = false;
+let editProjectClicked;
+let editProjectPopupOpen;
+
+function openEditProjectPopup(e) {
+  for (let i = 0; i < editProjectBtns.length; i++) {
+    if (e.target.classList[3] == `edit-project-${i}` && !editProjectPopupFlag) {
+      projectPopups[i].style.display = "flex";
+      editProjectPopupOpen = projectPopups[i];
+      editProjectClicked = `edit-project-${i}`;
+      editProjectPopupFlag = true;
+    }
+  }
+}
+
+document.addEventListener("click", (e) => {
+  if (editProjectPopupFlag && e.target.classList[3] != editProjectClicked) {
+    editProjectPopupOpen.style.display = "none";
+    editProjectPopupFlag = false;
+  }
+});
+
 let projectBtns = document.querySelectorAll(".project-btn");
+let editProjectBtns = document.querySelectorAll(".edit-project");
+let projectPopups = document.querySelectorAll(".project-popup");
 addEventListenerOnProjectsBtns();
+addEventListenersOnEditProjects();

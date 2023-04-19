@@ -1,4 +1,4 @@
-const projectFactory = (name) => {
+const projectFactory = (name, id) => {
   const todolist = [];
   const addTodo = (todoItem) => {
     todoItem.project = name;
@@ -12,7 +12,7 @@ const projectFactory = (name) => {
       }
     }
   };
-  return { name, todolist, addTodo, removeTodo };
+  return { name, todolist, id, addTodo, removeTodo };
 };
 
 export default projectFactory;

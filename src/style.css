@@ -7,6 +7,7 @@
   --green: #2ecc71;
   --btn-hover-color: rgba(128, 128, 128, 0.267);
   --text-color: #000;
+  --popup-bg-color: #f3f1f3;
 }
 
 html,
@@ -95,11 +96,17 @@ h3:nth-child(7) {
   margin-top: 16px;
 }
 
-.projects-container button {
+.projects-container > button {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 36px;
   padding: 0 16px;
   gap: 8px;
+}
+
+.fa-ellipsis-vertical {
+  padding: 4px;
 }
 
 .add-project-form {
@@ -141,6 +148,31 @@ h3:nth-child(7) {
 
 #project-name {
   border-radius: 4px;
+}
+
+.edit-project-container {
+  position: relative;
+}
+
+.project-popup {
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: var(--popup-bg-color);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.project-popup button {
+  margin: 0;
+}
+
+.project-popup button:hover {
+  background-color: var(--main-bg-color);
 }
 
 /*///////////////////////////////// MAIN ///////////////////////////////////*/
