@@ -66,6 +66,25 @@
                     <div class="tasks-container">
                         <p>Yay! No Tasks!</p>
                     </div>
+                    <form action="" method="post" class="add-task-form">
+                        <div>
+                            <label for="title">Title:</label>
+                            <input type="text" name="title" id="title" placeholder="What to do?" required>
+                        </div>
+                        <div>
+                            <label for="details">Details(optional):</label>
+                            <textarea type="text" name="details" id="details"
+                                placeholder="eg: I'm just gonna procrastinate, aren't I?"></textarea>
+                        </div>
+                        <div>
+                            <label for="date">Date:</label>
+                            <input type="date" name="date" id="date">
+                        </div>
+                        <div class="btns">
+                            <button type="submit">Add</button>
+                            <button>Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
