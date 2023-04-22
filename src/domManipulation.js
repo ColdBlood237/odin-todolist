@@ -1,7 +1,7 @@
 import { format, compareAsc } from "date-fns";
 
 const sidebarDiv = document.querySelector(".sidebar");
-const mainDiv = document.querySelector(".main");
+const contentDiv = document.querySelector(".content");
 const contentTitle = document.querySelector(".content-title");
 const projectsContainer = document.querySelector(".projects-container");
 const tasksContainer = document.querySelector(".tasks-container");
@@ -45,6 +45,7 @@ const renderProjectsList = (list) => {
 const renderTasks = (selection, list) => {
   tasksContainer.innerHTML = "";
   let taskFound = false;
+  removeAddTaskBtn();
   if (selection === "initialize" || selection.classList[1] === "option-1") {
     let taskId = 0;
     list.forEach((project) => {
@@ -181,6 +182,7 @@ const renderTasks = (selection, list) => {
           taskId++;
           tasksContainer.appendChild(taskDiv);
         });
+        renderAddTaskBtn(project.id);
       }
     });
   }
@@ -188,6 +190,21 @@ const renderTasks = (selection, list) => {
     tasksContainer.innerHTML = "<p>Yay! No Tasks!</p>";
   }
 };
+
+function removeAddTaskBtn() {
+  if (document.querySelector(".add-task-btn")) {
+    document.querySelector(".add-task-btn").remove();
+  }
+}
+
+function renderAddTaskBtn(id) {
+  removeAddTaskBtn();
+  const addTaskBtn = document.createElement("button");
+  addTaskBtn.classList.add(...["add-task-btn", `${id}`]);
+  addTaskBtn.innerHTML = `<i class="fa-solid fa-circle-plus"></i>
+                          <span>Add Task</span>`;
+  contentDiv.appendChild(addTaskBtn);
+}
 
 // for a later time
 const renderRenameProjectForm = (e) => {

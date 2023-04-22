@@ -255,3 +255,22 @@ h3:nth-child(7) {
   display: block;
   cursor: pointer;
 }
+
+.add-task-btn {
+  border: 0;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 8px 14px;
+  background-color: transparent;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.add-task-btn:hover {
+  background-color: var(--sidebar-bg-color);
+}
+
+.add-task-btn span {
+  margin-left: 16px;
+}
