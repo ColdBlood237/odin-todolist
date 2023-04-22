@@ -32,8 +32,8 @@ const renderProjectsList = (list) => {
                             </div>
                             <div class="edit-project-container">
                               <div class='project-popup popup-${projectId}'>
-                                <button>Rename</button>
-                                <button>Delete</button>
+                                <button class="rename-project project-${projectId}">Rename</button>
+                                <button class="delete-project project-${projectId}">Delete</button>
                               </div>
                                 <i class='fa-solid fa-ellipsis-vertical edit-project edit-project-${projectId}'></i>
                             </div>`;
@@ -189,6 +189,22 @@ const renderTasks = (selection, list) => {
   }
 };
 
-const popupEditProject = () => {};
+// for a later time
+const renderRenameProjectForm = (e) => {
+  console.log(e.target.classList[1]);
+  const projectBtn = document.querySelector(
+    `.project-btn.${e.target.classList[1]}`
+  );
+  const previousName = projectBtn.querySelector(".project-name").textContent;
+  projectBtn.innerHTML = `
+                          <form action="" method="post" class="rename-project-form ${e.target.classList[1]}">
+                            <label for="projectNameInput"><i class="fa-solid fa-bars fa-lg"></i></label>
+                            <input type="text" name="projectNameInput" id="projectNameInput" value="${previousName}" required>
+                            <div>
+                              <button id="submit-project" type="submit">Rename</button>
+                              <button class="close-project-form">Cancel</button>
+                            </div>
+                          </form>`;
+};
 
 export { hideSidebar, changeContentTitle, renderProjectsList, renderTasks };

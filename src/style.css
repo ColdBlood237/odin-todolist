@@ -175,6 +175,16 @@ h3:nth-child(7) {
   background-color: var(--main-bg-color);
 }
 
+.rename-project-form {
+  margin: 60px 0;
+}
+
+.rename-project-form > div {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
 /*///////////////////////////////// MAIN ///////////////////////////////////*/
 
 .main {

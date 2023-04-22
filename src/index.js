@@ -5,6 +5,7 @@ import {
   changeContentTitle,
   renderProjectsList,
   renderTasks,
+  renderRenameProjectForm,
 } from "./domManipulation";
 import { format } from "date-fns";
 
@@ -118,6 +119,14 @@ function openEditProjectPopup(e) {
 }
 
 document.addEventListener("click", (e) => {
+  if (
+    e.target.classList[2] === "edit-project" &&
+    e.target.classList[3] != editProjectClicked
+  ) {
+    editProjectPopupOpen.style.display = "none";
+    editProjectPopupFlag = false;
+    openEditProjectPopup(e);
+  }
   if (editProjectPopupFlag && e.target.classList[3] != editProjectClicked) {
     editProjectPopupOpen.style.display = "none";
     editProjectPopupFlag = false;
@@ -127,5 +136,25 @@ document.addEventListener("click", (e) => {
 let projectBtns = document.querySelectorAll(".project-btn");
 let editProjectBtns = document.querySelectorAll(".edit-project");
 let projectPopups = document.querySelectorAll(".project-popup");
+let deleteProjectBtns = document.querySelectorAll(".delete-project");
 addEventListenerOnProjectsBtns();
 addEventListenersOnEditProjects();
+
+console.log(projectsList);
+
+deleteProjectBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    for (let i = 0; i < projectsList.length; i++) {
+      if (projectsList[i].id === btn.classList[1]) {
+        projectsList.splice(i, 1);
+      }
+    }
+    console.log(projectsList);
+    renderProjectsList(projectsList);
+    projectBtns = document.querySelectorAll(".project-btn");
+    editProjectBtns = document.querySelectorAll(".edit-project");
+    projectPopups = document.querySelectorAll(".project-popup");
+    addEventListenerOnProjectsBtns();
+    addEventListenersOnEditProjects();
+  });
+});
