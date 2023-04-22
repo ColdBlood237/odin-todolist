@@ -274,3 +274,42 @@ h3:nth-child(7) {
 .add-task-btn span {
   margin-left: 16px;
 }
+
+.add-task-form {
+  display: none;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-task-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-task-form .btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 16px;
+}
+
+.btns button {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+}
+
+.btns button:first-child {
+  background-color: #2ecc71;
+  width: 62px;
+}
+
+.btns button:last-child {
+  background-color: red;
+}
