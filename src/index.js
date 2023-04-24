@@ -7,7 +7,6 @@ import {
   renderTasks,
   renderRenameProjectForm,
 } from "./domManipulation";
-import { add, format } from "date-fns";
 
 const hideSidebarBtn = document.querySelector(".sidebar-btn");
 const allTaskBtn = document.querySelector(".option-1");
@@ -89,11 +88,13 @@ function createProject(name) {
   projectId++;
 }
 
+let addTaskFormIsOpen = false;
 function addEventListenerOnProjectsBtns() {
   projectBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       changeContentTitle(btn.querySelector(".project-name"));
       renderTasks(btn, projectsList);
+      addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
 
       openAddTaskForm();
       closeAddTaskForm();
@@ -107,10 +108,10 @@ function addEventListenersOnEditProjects() {
   });
 }
 
+// to refactor later
 let editProjectPopupFlag = false;
 let editProjectClicked;
 let editProjectPopupOpen;
-
 function openEditProjectPopup(e) {
   for (let i = 0; i < editProjectBtns.length; i++) {
     if (e.target.classList[3] == `edit-project-${i}` && !editProjectPopupFlag) {
@@ -124,18 +125,43 @@ function openEditProjectPopup(e) {
 
 function openAddTaskForm() {
   const addTaskBtn = document.querySelector(".add-task-btn");
-  addTaskBtn.addEventListener("click", (e) => {
+  addTaskBtn.addEventListener("click", () => {
     addTaskForm.style.display = "flex";
+    addTaskFormIsOpen = true;
   });
 }
 
 function closeAddTaskForm() {
   const closeFormBtn = addTaskForm.querySelector(".cancel");
-  closeFormBtn.addEventListener("click", () => {
-    addTaskForm.style.display = "none";
+  document.addEventListener("click", (e) => {
+    if (closeFormBtn.contains(e.target)) {
+      addTaskForm.style.display = "none";
+      addTaskFormIsOpen = false;
+    }
   });
 }
 
+addTaskForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const taskTitle = addTaskForm.querySelector("#title").value;
+  const taskDetails = addTaskForm.querySelector("#details").value;
+  const taskDueDate = new Date(addTaskForm.querySelector("#date").value);
+  const newTask = todoFactory(taskTitle, taskDetails, taskDueDate);
+  projectsList.forEach((project) => {
+    if (project.id === addTaskForm.classList[1]) {
+      project.addTodo(newTask);
+    }
+  });
+  addTaskForm.style.display = "none";
+  renderTasks(
+    document.querySelector(`button.${addTaskForm.classList[1]}`),
+    projectsList
+  );
+  addTaskForm.reset();
+  openAddTaskForm();
+});
+
+// so ugly I gotta refactor this later
 document.addEventListener("click", (e) => {
   if (
     e.target.classList[2] === "edit-project" &&
