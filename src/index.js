@@ -7,7 +7,7 @@ import {
   renderTasks,
   renderRenameProjectForm,
 } from "./domManipulation";
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 
 const hideSidebarBtn = document.querySelector(".sidebar-btn");
 const allTaskBtn = document.querySelector(".option-1");
@@ -18,6 +18,7 @@ const sidebarOptions = [allTaskBtn, todayBtn, weekBtn, importantBtn];
 const addProjectBtn = document.querySelector(".add-project");
 const addProjectForm = document.querySelector(".add-project-form");
 const closeProjectForm = document.querySelector(".close-project-form");
+const addTaskForm = document.querySelector(".add-task-form");
 
 const projectsList = [];
 
@@ -93,6 +94,9 @@ function addEventListenerOnProjectsBtns() {
     btn.addEventListener("click", (e) => {
       changeContentTitle(btn.querySelector(".project-name"));
       renderTasks(btn, projectsList);
+
+      openAddTaskForm();
+      closeAddTaskForm();
     });
   });
 }
@@ -118,6 +122,20 @@ function openEditProjectPopup(e) {
   }
 }
 
+function openAddTaskForm() {
+  const addTaskBtn = document.querySelector(".add-task-btn");
+  addTaskBtn.addEventListener("click", (e) => {
+    addTaskForm.style.display = "flex";
+  });
+}
+
+function closeAddTaskForm() {
+  const closeFormBtn = addTaskForm.querySelector(".cancel");
+  closeFormBtn.addEventListener("click", () => {
+    addTaskForm.style.display = "none";
+  });
+}
+
 document.addEventListener("click", (e) => {
   if (
     e.target.classList[2] === "edit-project" &&
@@ -133,14 +151,13 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// elements that change
 let projectBtns = document.querySelectorAll(".project-btn");
 let editProjectBtns = document.querySelectorAll(".edit-project");
 let projectPopups = document.querySelectorAll(".project-popup");
 let deleteProjectBtns = document.querySelectorAll(".delete-project");
 addEventListenerOnProjectsBtns();
 addEventListenersOnEditProjects();
-
-console.log(projectsList);
 
 deleteProjectBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
