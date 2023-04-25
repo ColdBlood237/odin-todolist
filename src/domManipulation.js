@@ -64,9 +64,25 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button><i class="fa-regular fa-star"></i></button>
-                          <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>`;
+                          <button class="priority-btn ${taskId}"></button>
+                          <div class="edit-task-container">
+                            <div class="task-popup task-popup-${taskId}">
+                              <button class="edit-task task-${taskId}">Edit</button>
+                              <button class="delete-task task-${taskId}">Delete</button>
+                            </div>
+                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                          </div>   
+                         </div>`;
+        const star = document.createElement("i");
+        if (task.hasPriority) {
+          star.classList.add(...["fa-solid", "fa-star"]);
+          star.style.color = "#eee844";
+        } else {
+          star.classList.add(...["fa-regular", "fa-star"]);
+        }
+        const priorityBtn = taskDiv.querySelector(".priority-btn");
+        priorityBtn.appendChild(star);
+
         taskId++;
         tasksContainer.appendChild(taskDiv);
       });
@@ -85,17 +101,33 @@ const renderTasks = (selection, list) => {
           taskDiv.classList.add("task");
           taskDiv.id = `${taskId}`;
           taskDiv.innerHTML = `<div>
-                          <input type="checkbox" name="" id=${taskId}>
-                          <div class="task-text">
-                            <h5>${task.title}</h5>
-                            <p>${task.description}</p>
-                          </div>
-                         </div>
-                         <div>
-                          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button><i class="fa-regular fa-star"></i></button>
-                          <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>`;
+          <input type="checkbox" name="" id=${taskId}>
+          <div class="task-text">
+            <h5>${task.title}</h5>
+            <p>${task.description}</p>
+          </div>
+         </div>
+         <div>
+          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
+          <button class="priority-btn ${taskId}"></button>
+          <div class="edit-task-container">
+            <div class="task-popup task-popup-${taskId}">
+              <button class="edit-task task-${taskId}">Edit</button>
+              <button class="delete-task task-${taskId}">Delete</button>
+            </div>
+            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+          </div>   
+         </div>`;
+          const star = document.createElement("i");
+          if (task.hasPriority) {
+            star.classList.add(...["fa-solid", "fa-star"]);
+            star.style.color = "#eee844";
+          } else {
+            star.classList.add(...["fa-regular", "fa-star"]);
+          }
+          const priorityBtn = taskDiv.querySelector(".priority-btn");
+          priorityBtn.appendChild(star);
+
           taskId++;
           tasksContainer.appendChild(taskDiv);
         }
@@ -122,9 +154,25 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button><i class="fa-regular fa-star"></i></button>
-                          <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>`;
+                          <button class="priority-btn ${taskId}"></button>
+                          <div class="edit-task-container">
+                            <div class="task-popup task-popup-${taskId}">
+                              <button class="edit-task task-${taskId}">Edit</button>
+                              <button class="delete-task task-${taskId}">Delete</button>
+                            </div>
+                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                          </div>   
+                         </div>`;
+          const star = document.createElement("i");
+          if (task.hasPriority) {
+            star.classList.add(...["fa-solid", "fa-star"]);
+            star.style.color = "#eee844";
+          } else {
+            star.classList.add(...["fa-regular", "fa-star"]);
+          }
+          const priorityBtn = taskDiv.querySelector(".priority-btn");
+          priorityBtn.appendChild(star);
+
           taskId++;
           tasksContainer.appendChild(taskDiv);
         }
@@ -149,9 +197,25 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button><i class="fa-regular fa-star"></i></button>
-                          <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>`;
+                          <button class="priority-btn ${taskId}"></button>
+                          <div class="edit-task-container">
+                            <div class="task-popup task-popup-${taskId}">
+                              <button class="edit-task task-${taskId}">Edit</button>
+                              <button class="delete-task task-${taskId}">Delete</button>
+                            </div>
+                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                          </div>   
+                         </div>`;
+          const star = document.createElement("i");
+          if (task.hasPriority) {
+            star.classList.add(...["fa-solid", "fa-star"]);
+            star.style.color = "#eee844";
+          } else {
+            star.classList.add(...["fa-regular", "fa-star"]);
+          }
+          const priorityBtn = taskDiv.querySelector(".priority-btn");
+          priorityBtn.appendChild(star);
+
           taskId++;
           tasksContainer.appendChild(taskDiv);
         }
@@ -176,9 +240,25 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button><i class="fa-regular fa-star"></i></button>
-                          <button><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                        </div>`;
+                          <button class="priority-btn ${taskId}"></button>
+                          <div class="edit-task-container">
+                            <div class="task-popup task-popup-${taskId}">
+                              <button class="edit-task task-${taskId}">Edit</button>
+                              <button class="delete-task task-${taskId}">Delete</button>
+                            </div>
+                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                          </div>   
+                         </div>`;
+          const star = document.createElement("i");
+          if (task.hasPriority) {
+            star.classList.add(...["fa-solid", "fa-star"]);
+            star.style.color = "#eee844";
+          } else {
+            star.classList.add(...["fa-regular", "fa-star"]);
+          }
+          const priorityBtn = taskDiv.querySelector(".priority-btn");
+          priorityBtn.appendChild(star);
+
           taskId++;
           tasksContainer.appendChild(taskDiv);
         });

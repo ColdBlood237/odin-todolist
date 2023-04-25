@@ -18,6 +18,9 @@ const addProjectBtn = document.querySelector(".add-project");
 const addProjectForm = document.querySelector(".add-project-form");
 const closeProjectForm = document.querySelector(".close-project-form");
 const addTaskForm = document.querySelector(".add-task-form");
+let taskPriorityBtns = document.querySelectorAll(".priority-btn");
+let editTaskBtns = document.querySelectorAll(".edit-task-btn");
+let tasksPopups = document.querySelectorAll(".task-popup");
 
 const projectsList = [];
 
@@ -39,11 +42,15 @@ sidebarOptions.forEach((option) => {
   option.addEventListener("click", () => {
     changeContentTitle(option);
     renderTasks(option, projectsList);
+    addEventListenerOnPriorityBtns();
+    addEventListenersOnEditTasks();
   });
 });
 
 renderProjectsList(projectsList);
 renderTasks("initialize", projectsList);
+addEventListenerOnPriorityBtns();
+addEventListenersOnEditTasks();
 
 addProjectBtn.addEventListener("click", () => {
   addProjectForm.style.display = "block";
@@ -94,6 +101,8 @@ function addEventListenerOnProjectsBtns() {
     btn.addEventListener("click", (e) => {
       changeContentTitle(btn.querySelector(".project-name"));
       renderTasks(btn, projectsList);
+      addEventListenerOnPriorityBtns();
+      addEventListenersOnEditTasks();
       addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
 
       openAddTaskForm();
@@ -123,6 +132,23 @@ function openEditProjectPopup(e) {
   }
 }
 
+// close the edit project popup
+// so ugly I gotta refactor this later
+document.addEventListener("click", (e) => {
+  if (
+    e.target.classList[2] === "edit-project" &&
+    e.target.classList[3] != editProjectClicked
+  ) {
+    editProjectPopupOpen.style.display = "none";
+    editProjectPopupFlag = false;
+    openEditProjectPopup(e);
+  }
+  if (editProjectPopupFlag && e.target.classList[3] != editProjectClicked) {
+    editProjectPopupOpen.style.display = "none";
+    editProjectPopupFlag = false;
+  }
+});
+
 function openAddTaskForm() {
   const addTaskBtn = document.querySelector(".add-task-btn");
   addTaskBtn.addEventListener("click", () => {
@@ -141,6 +167,7 @@ function closeAddTaskForm() {
   });
 }
 
+// create a new task from form data
 addTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskTitle = addTaskForm.querySelector("#title").value;
@@ -157,23 +184,59 @@ addTaskForm.addEventListener("submit", (e) => {
     document.querySelector(`button.${addTaskForm.classList[1]}`),
     projectsList
   );
+  addEventListenerOnPriorityBtns();
+  addEventListenersOnEditTasks();
   addTaskForm.reset();
   openAddTaskForm();
 });
 
-// so ugly I gotta refactor this later
-document.addEventListener("click", (e) => {
-  if (
-    e.target.classList[2] === "edit-project" &&
-    e.target.classList[3] != editProjectClicked
-  ) {
-    editProjectPopupOpen.style.display = "none";
-    editProjectPopupFlag = false;
-    openEditProjectPopup(e);
+function addEventListenerOnPriorityBtns() {
+  taskPriorityBtns = document.querySelectorAll(".priority-btn");
+  taskPriorityBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      projectsList.forEach((project) => {
+        project.todolist.forEach((task) => {
+          if (task.id == btn.classList[1]) {
+            if (task.hasPriority) {
+              task.hasPriority = false;
+            } else {
+              task.hasPriority = true;
+            }
+          }
+        });
+      });
+    });
+  });
+}
+
+function addEventListenersOnEditTasks() {
+  editTaskBtns = document.querySelectorAll(".edit-task-btn");
+  tasksPopups = document.querySelectorAll(".task-popup");
+  editTaskBtns.forEach((btn) => {
+    btn.addEventListener("click", openTaskPopup);
+  });
+}
+
+let taskPopupIsOpen = false;
+function openTaskPopup(e) {
+  for (let i = 0; i < editTaskBtns.length; i++) {
+    if (e.target.classList[1] == i) {
+      tasksPopups[i].style.display = "flex";
+      taskPopupIsOpen = true;
+    }
   }
-  if (editProjectPopupFlag && e.target.classList[3] != editProjectClicked) {
-    editProjectPopupOpen.style.display = "none";
-    editProjectPopupFlag = false;
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList[0] === "edit-task-btn" && taskPopupIsOpen) {
+    tasksPopups.forEach((popup) => {
+      popup.style.display = "none";
+    });
+    openTaskPopup(e);
+  } else if (taskPopupIsOpen) {
+    tasksPopups.forEach((popup) => {
+      popup.style.display = "none";
+    });
   }
 });
 
@@ -182,8 +245,11 @@ let projectBtns = document.querySelectorAll(".project-btn");
 let editProjectBtns = document.querySelectorAll(".edit-project");
 let projectPopups = document.querySelectorAll(".project-popup");
 let deleteProjectBtns = document.querySelectorAll(".delete-project");
+
 addEventListenerOnProjectsBtns();
 addEventListenersOnEditProjects();
+addEventListenerOnPriorityBtns();
+addEventListenersOnEditTasks();
 
 deleteProjectBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -192,7 +258,6 @@ deleteProjectBtns.forEach((btn) => {
         projectsList.splice(i, 1);
       }
     }
-    console.log(projectsList);
     renderProjectsList(projectsList);
     projectBtns = document.querySelectorAll(".project-btn");
     editProjectBtns = document.querySelectorAll(".edit-project");

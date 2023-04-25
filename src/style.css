@@ -313,3 +313,30 @@ h3:nth-child(7) {
 .btns button:last-child {
   background-color: red;
 }
+
+.edit-task-container {
+  position: relative;
+}
+
+.edit-task-btn:hover {
+  background-color: var(--main-bg-color);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.task-popup {
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+  padding: 6px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: var(--sidebar-bg-color);
+}
+
+.task-popup button {
+  margin: 0;
+}
