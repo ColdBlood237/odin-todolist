@@ -39,6 +39,7 @@ projectsList.push(testProject);
 
 hideSidebarBtn.addEventListener("click", hideSidebar);
 
+// switch content pressing menu buttons
 sidebarOptions.forEach((option) => {
   option.addEventListener("click", () => {
     changeContentTitle(option);
@@ -53,40 +54,45 @@ renderTasks("initialize", projectsList);
 addEventListenerOnPriorityBtns();
 addEventListenersOnEditTasks();
 
+// open the form to type the new project's name
 addProjectBtn.addEventListener("click", () => {
   addProjectForm.style.display = "block";
 });
 
+// create the projects
 addProjectForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputValue = document.getElementById("projectNameInput").value;
-  if (validateForm(inputValue) === false) {
+  if (nameAlreadyUsed(inputValue)) {
     return false;
   }
   createProject(inputValue);
+  addProjectForm.reset();
   addProjectForm.style.display = "none";
   renderProjectsList(projectsList);
   projectBtns = document.querySelectorAll(".project-btn");
   editProjectBtns = document.querySelectorAll(".edit-project");
   projectPopups = document.querySelectorAll(".project-popup");
+  deleteProjectBtns = document.querySelectorAll(".delete-project");
   addEventListenerOnProjectsBtns();
   addEventListenersOnEditProjects();
+  addEventListenerOnDeleteProjectsBtns();
 });
 
 closeProjectForm.addEventListener("click", () => {
   addProjectForm.style.display = "none";
 });
 
-function validateForm(name) {
+function nameAlreadyUsed(newName) {
   let nameAlreadyPresent = false;
   projectsList.forEach((project) => {
-    if (project.name === name) {
+    if (project.name === newName) {
       nameAlreadyPresent = true;
     }
   });
   if (nameAlreadyPresent) {
     alert("A project with the same name already exists.");
-    return false;
+    return true;
   }
 }
 
@@ -141,6 +147,27 @@ document.addEventListener("click", (e) => {
     projectPopupIsOpen = false;
   }
 });
+
+function addEventListenerOnDeleteProjectsBtns() {
+  deleteProjectBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      for (let i = 0; i < projectsList.length; i++) {
+        if (projectsList[i].id === btn.classList[1]) {
+          projectsList.splice(i, 1);
+        }
+      }
+
+      renderProjectsList(projectsList);
+      projectBtns = document.querySelectorAll(".project-btn");
+      editProjectBtns = document.querySelectorAll(".edit-project");
+      projectPopups = document.querySelectorAll(".project-popup");
+      deleteProjectBtns = document.querySelectorAll(".delete-project");
+      addEventListenerOnProjectsBtns();
+      addEventListenersOnEditProjects();
+      addEventListenerOnDeleteProjectsBtns();
+    });
+  });
+}
 
 function openAddTaskForm() {
   const addTaskBtn = document.querySelector(".add-task-btn");
@@ -257,24 +284,3 @@ addEventListenerOnPriorityBtns();
 addEventListenersOnEditTasks();
 addEventListenerOnDeleteTaskBtns();
 addEventListenerOnDeleteProjectsBtns();
-
-function addEventListenerOnDeleteProjectsBtns() {
-  deleteProjectBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      for (let i = 0; i < projectsList.length; i++) {
-        if (projectsList[i].id === btn.classList[1]) {
-          projectsList.splice(i, 1);
-        }
-      }
-
-      renderProjectsList(projectsList);
-      projectBtns = document.querySelectorAll(".project-btn");
-      editProjectBtns = document.querySelectorAll(".edit-project");
-      projectPopups = document.querySelectorAll(".project-popup");
-      deleteProjectBtns = document.querySelectorAll(".delete-project");
-      addEventListenerOnProjectsBtns();
-      addEventListenersOnEditProjects();
-      addEventListenerOnDeleteProjectsBtns();
-    });
-  });
-}
