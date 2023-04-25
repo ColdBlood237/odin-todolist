@@ -219,8 +219,11 @@ function addEventListenerOnPriorityBtns() {
           if (task.id == btn.classList[1]) {
             if (task.hasPriority) {
               task.hasPriority = false;
+              btn.innerHTML = '<i class="fa-regular fa-star"></i>';
             } else {
               task.hasPriority = true;
+              btn.innerHTML =
+                '<i class="fa-solid fa-star" style="color: rgb(238, 232, 68);"></i>';
             }
           }
         });
