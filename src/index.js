@@ -21,6 +21,7 @@ const addTaskForm = document.querySelector(".add-task-form");
 let taskPriorityBtns = document.querySelectorAll(".priority-btn");
 let editTaskBtns = document.querySelectorAll(".edit-task-btn");
 let tasksPopups = document.querySelectorAll(".task-popup");
+let deleteTasksBtns = document.querySelectorAll(".delete-task");
 
 const projectsList = [];
 
@@ -104,7 +105,6 @@ function addEventListenerOnProjectsBtns() {
       addEventListenerOnPriorityBtns();
       addEventListenersOnEditTasks();
       addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
-
       openAddTaskForm();
       closeAddTaskForm();
     });
@@ -117,35 +117,28 @@ function addEventListenersOnEditProjects() {
   });
 }
 
-// to refactor later
-let editProjectPopupFlag = false;
-let editProjectClicked;
-let editProjectPopupOpen;
+let projectPopupIsOpen = false;
 function openEditProjectPopup(e) {
-  for (let i = 0; i < editProjectBtns.length; i++) {
-    if (e.target.classList[3] == `edit-project-${i}` && !editProjectPopupFlag) {
-      projectPopups[i].style.display = "flex";
-      editProjectPopupOpen = projectPopups[i];
-      editProjectClicked = `edit-project-${i}`;
-      editProjectPopupFlag = true;
+  projectPopups.forEach((popup) => {
+    if (e.target.classList[3] === popup.classList[1]) {
+      popup.style.display = "flex";
+      projectPopupIsOpen = true;
     }
-  }
+  });
 }
 
-// close the edit project popup
-// so ugly I gotta refactor this later
+// close the project editor popup
 document.addEventListener("click", (e) => {
-  if (
-    e.target.classList[2] === "edit-project" &&
-    e.target.classList[3] != editProjectClicked
-  ) {
-    editProjectPopupOpen.style.display = "none";
-    editProjectPopupFlag = false;
+  if (projectPopupIsOpen && e.target.classList[2] === "edit-project") {
+    projectPopups.forEach((popup) => {
+      popup.style.display = "none";
+    });
     openEditProjectPopup(e);
-  }
-  if (editProjectPopupFlag && e.target.classList[3] != editProjectClicked) {
-    editProjectPopupOpen.style.display = "none";
-    editProjectPopupFlag = false;
+  } else if (projectPopupIsOpen) {
+    projectPopups.forEach((popup) => {
+      popup.style.display = "none";
+    });
+    projectPopupIsOpen = false;
   }
 });
 
@@ -225,8 +218,10 @@ function openTaskPopup(e) {
       taskPopupIsOpen = true;
     }
   }
+  addEventListenerOnDeleteTaskBtns();
 }
 
+// close the task editor popup
 document.addEventListener("click", (e) => {
   if (e.target.classList[0] === "edit-task-btn" && taskPopupIsOpen) {
     tasksPopups.forEach((popup) => {
@@ -240,6 +235,16 @@ document.addEventListener("click", (e) => {
   }
 });
 
+function addEventListenerOnDeleteTaskBtns() {
+  deleteTasksBtns = document.querySelectorAll(".delete-task");
+
+  deleteTasksBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {});
+  });
+}
+
+function deleteTask(e) {}
+
 // elements that change
 let projectBtns = document.querySelectorAll(".project-btn");
 let editProjectBtns = document.querySelectorAll(".edit-project");
@@ -250,19 +255,26 @@ addEventListenerOnProjectsBtns();
 addEventListenersOnEditProjects();
 addEventListenerOnPriorityBtns();
 addEventListenersOnEditTasks();
+addEventListenerOnDeleteTaskBtns();
+addEventListenerOnDeleteProjectsBtns();
 
-deleteProjectBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    for (let i = 0; i < projectsList.length; i++) {
-      if (projectsList[i].id === btn.classList[1]) {
-        projectsList.splice(i, 1);
+function addEventListenerOnDeleteProjectsBtns() {
+  deleteProjectBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      for (let i = 0; i < projectsList.length; i++) {
+        if (projectsList[i].id === btn.classList[1]) {
+          projectsList.splice(i, 1);
+        }
       }
-    }
-    renderProjectsList(projectsList);
-    projectBtns = document.querySelectorAll(".project-btn");
-    editProjectBtns = document.querySelectorAll(".edit-project");
-    projectPopups = document.querySelectorAll(".project-popup");
-    addEventListenerOnProjectsBtns();
-    addEventListenersOnEditProjects();
+
+      renderProjectsList(projectsList);
+      projectBtns = document.querySelectorAll(".project-btn");
+      editProjectBtns = document.querySelectorAll(".edit-project");
+      projectPopups = document.querySelectorAll(".project-popup");
+      deleteProjectBtns = document.querySelectorAll(".delete-project");
+      addEventListenerOnProjectsBtns();
+      addEventListenersOnEditProjects();
+      addEventListenerOnDeleteProjectsBtns();
+    });
   });
-});
+}

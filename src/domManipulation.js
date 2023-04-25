@@ -19,26 +19,24 @@ const changeContentTitle = (sidebarChoice) => {
 };
 
 const renderProjectsList = (list) => {
-  let projectId = 0;
   document.querySelectorAll(".projects-container *").forEach((element) => {
     element.remove();
   });
   list.forEach((project) => {
     const projectBtn = document.createElement("button");
-    projectBtn.classList.add(...[`project-btn`, `project-${projectId}`]);
+    projectBtn.classList.add(...[`project-btn`, `${project.id}`]);
     projectBtn.innerHTML = `<div>
                               <i class='fa-solid fa-bars fa-lg'></i>
                               <span class="project-name">${project.name}</span>
                             </div>
                             <div class="edit-project-container">
-                              <div class='project-popup popup-${projectId}'>
-                                <button class="rename-project project-${projectId}">Rename</button>
-                                <button class="delete-project project-${projectId}">Delete</button>
+                              <div class='project-popup ${project.id}'>
+                                <button class="rename-project ${project.id}">Rename</button>
+                                <button class="delete-project ${project.id}">Delete</button>
                               </div>
-                                <i class='fa-solid fa-ellipsis-vertical edit-project edit-project-${projectId}'></i>
+                                <i class='fa-solid fa-ellipsis-vertical edit-project ${project.id}'></i>
                             </div>`;
     projectsContainer.append(projectBtn);
-    projectId++;
   });
 };
 
