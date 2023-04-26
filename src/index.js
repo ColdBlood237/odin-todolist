@@ -56,6 +56,26 @@ sidebarOptions.forEach((option) => {
   });
 });
 
+function refreshContent() {
+  projectBtns = document.querySelectorAll(".project-btn");
+  const contentTitle = document.querySelector(".content-title").textContent;
+  sidebarOptions.forEach((option) => {
+    const optionName = option.querySelector("span").textContent;
+    if (optionName.trim() === contentTitle.trim()) {
+      renderTasks(option, projectsList);
+    }
+  });
+  projectBtns.forEach((btn) => {
+    const buttonName = btn.querySelector(".project-name").textContent;
+    if (buttonName === contentTitle) {
+      renderTasks(btn, projectsList);
+    }
+  });
+  addEventListenerOnPriorityBtns();
+  addEventListenersOnEditTasks();
+  addEventListenerOnDeleteTaskBtns();
+}
+
 // open the form to type the new project's name
 addProjectBtn.addEventListener("click", () => {
   addProjectForm.style.display = "block";
@@ -286,6 +306,7 @@ function deleteTask(btn) {
     project.todolist.forEach((task) => {
       if (btn.classList[1] === `task-${task.id}`) {
         project.removeTodo(task);
+        refreshContent();
       }
     });
   });
