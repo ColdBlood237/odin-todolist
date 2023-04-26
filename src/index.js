@@ -39,6 +39,12 @@ projectsList.push(testProject);
 
 hideSidebarBtn.addEventListener("click", hideSidebar);
 
+renderProjectsList(projectsList);
+renderTasks("initialize", projectsList);
+addEventListenerOnPriorityBtns();
+addEventListenersOnEditTasks();
+addEventListenerOnDeleteTaskBtns();
+
 // switch content pressing menu buttons
 sidebarOptions.forEach((option) => {
   option.addEventListener("click", () => {
@@ -46,13 +52,9 @@ sidebarOptions.forEach((option) => {
     renderTasks(option, projectsList);
     addEventListenerOnPriorityBtns();
     addEventListenersOnEditTasks();
+    addEventListenerOnDeleteTaskBtns();
   });
 });
-
-renderProjectsList(projectsList);
-renderTasks("initialize", projectsList);
-addEventListenerOnPriorityBtns();
-addEventListenersOnEditTasks();
 
 // open the form to type the new project's name
 addProjectBtn.addEventListener("click", () => {
@@ -110,6 +112,7 @@ function addEventListenerOnProjectsBtns() {
       renderTasks(btn, projectsList);
       addEventListenerOnPriorityBtns();
       addEventListenersOnEditTasks();
+      addEventListenerOnDeleteTaskBtns();
       addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
       openAddTaskForm();
       closeAddTaskForm();
@@ -206,6 +209,7 @@ addTaskForm.addEventListener("submit", (e) => {
   );
   addEventListenerOnPriorityBtns();
   addEventListenersOnEditTasks();
+  addEventListenerOnDeleteTaskBtns();
   addTaskForm.reset();
   openAddTaskForm();
 });
@@ -242,13 +246,16 @@ function addEventListenersOnEditTasks() {
 
 let taskPopupIsOpen = false;
 function openTaskPopup(e) {
-  for (let i = 0; i < editTaskBtns.length; i++) {
-    if (e.target.classList[1] == i) {
-      tasksPopups[i].style.display = "flex";
-      taskPopupIsOpen = true;
+  editTaskBtns.forEach((btn) => {
+    if (btn.classList[1] === e.target.classList[1]) {
+      tasksPopups.forEach((popup) => {
+        if (popup.classList[1] === `task-popup-${btn.classList[1]}`) {
+          popup.style.display = "flex";
+          taskPopupIsOpen = true;
+        }
+      });
     }
-  }
-  addEventListenerOnDeleteTaskBtns();
+  });
 }
 
 // close the task editor popup
@@ -267,13 +274,22 @@ document.addEventListener("click", (e) => {
 
 function addEventListenerOnDeleteTaskBtns() {
   deleteTasksBtns = document.querySelectorAll(".delete-task");
-
   deleteTasksBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {});
+    btn.addEventListener("click", () => {
+      deleteTask(btn);
+    });
   });
 }
 
-function deleteTask(e) {}
+function deleteTask(btn) {
+  projectsList.forEach((project) => {
+    project.todolist.forEach((task) => {
+      if (btn.classList[1] === `task-${task.id}`) {
+        project.removeTodo(task);
+      }
+    });
+  });
+}
 
 // elements that change
 let projectBtns = document.querySelectorAll(".project-btn");

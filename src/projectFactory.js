@@ -1,8 +1,12 @@
+let tasksCounter = 0;
+
 const projectFactory = (name, id) => {
   const todolist = [];
   const addTodo = (todoItem) => {
     todoItem.project = name;
+    todoItem.id = tasksCounter;
     todolist.push(todoItem);
+    tasksCounter++;
   };
   const removeTodo = (todoItem) => {
     for (let i = 0; i < todolist.length; i++) {

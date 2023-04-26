@@ -217,8 +217,11 @@ h3:nth-child(7) {
   border: 1px solid var(--text-color);
   border-radius: 5px;
   padding: 0 16px;
-  cursor: pointer;
   margin-bottom: 8px;
+}
+
+.task input[type="checkbox"] {
+  cursor: pointer;
 }
 
 .task:hover {
@@ -231,7 +234,7 @@ h3:nth-child(7) {
 }
 
 .task button:hover {
-  background-color: var(--btn-hover-color);
+  background-color: var(--main-bg-color);
 }
 
 .task > div {
@@ -318,6 +321,10 @@ h3:nth-child(7) {
   position: relative;
 }
 
+.edit-task-btn {
+  cursor: pointer;
+}
+
 .edit-task-btn:hover {
   background-color: var(--main-bg-color);
   padding: 8px;
@@ -339,4 +346,8 @@ h3:nth-child(7) {
 
 .task-popup button {
   margin: 0;
+}
+
+.priority-btn {
+  border-radius: 4px;
 }

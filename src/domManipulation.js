@@ -45,16 +45,14 @@ const renderTasks = (selection, list) => {
   let taskFound = false;
   removeAddTaskBtn();
   if (selection === "initialize" || selection.classList[1] === "option-1") {
-    let taskId = 0;
     list.forEach((project) => {
       project.todolist.forEach((task) => {
         taskFound = true;
-        task.id = taskId;
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
-        taskDiv.id = `${taskId}`;
+        taskDiv.id = `${task.id}`;
         taskDiv.innerHTML = `<div>
-                          <input type="checkbox" name="" id=${taskId}>
+                          <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
                             <h5>${task.title}</h5>
                             <p>${task.description}</p>
@@ -62,13 +60,19 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button class="priority-btn ${taskId}"></button>
+                          <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
-                            <div class="task-popup task-popup-${taskId}">
-                              <button class="edit-task task-${taskId}">Edit</button>
-                              <button class="delete-task task-${taskId}">Delete</button>
+                            <div class="task-popup task-popup-${task.id}">
+                              <button class="edit-task task-${
+                                task.id
+                              }">Edit</button>
+                              <button class="delete-task task-${
+                                task.id
+                              }">Delete</button>
                             </div>
-                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                            <i class="edit-task-btn ${
+                              task.id
+                            } fa-solid fa-ellipsis-vertical"></i>
                           </div>   
                          </div>`;
         const star = document.createElement("i");
@@ -80,13 +84,10 @@ const renderTasks = (selection, list) => {
         }
         const priorityBtn = taskDiv.querySelector(".priority-btn");
         priorityBtn.appendChild(star);
-
-        taskId++;
         tasksContainer.appendChild(taskDiv);
       });
     });
   } else if (selection.classList[1] === "option-2") {
-    let taskId = 0;
     list.forEach((project) => {
       project.todolist.forEach((task) => {
         if (
@@ -94,12 +95,12 @@ const renderTasks = (selection, list) => {
           format(Date.now(), "dd/MM/yyyy")
         ) {
           taskFound = true;
-          task.id = taskId;
+
           const taskDiv = document.createElement("div");
           taskDiv.classList.add("task");
-          taskDiv.id = `${taskId}`;
+          taskDiv.id = `${task.id}`;
           taskDiv.innerHTML = `<div>
-          <input type="checkbox" name="" id=${taskId}>
+          <input type="checkbox" name="" id=${task.id}>
           <div class="task-text">
             <h5>${task.title}</h5>
             <p>${task.description}</p>
@@ -107,13 +108,15 @@ const renderTasks = (selection, list) => {
          </div>
          <div>
           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-          <button class="priority-btn ${taskId}"></button>
+          <button class="priority-btn ${task.id}"></button>
           <div class="edit-task-container">
-            <div class="task-popup task-popup-${taskId}">
-              <button class="edit-task task-${taskId}">Edit</button>
-              <button class="delete-task task-${taskId}">Delete</button>
+            <div class="task-popup task-popup-${task.id}">
+              <button class="edit-task task-${task.id}">Edit</button>
+              <button class="delete-task task-${task.id}">Delete</button>
             </div>
-            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+            <i class="edit-task-btn ${
+              task.id
+            } fa-solid fa-ellipsis-vertical"></i>
           </div>   
          </div>`;
           const star = document.createElement("i");
@@ -126,25 +129,23 @@ const renderTasks = (selection, list) => {
           const priorityBtn = taskDiv.querySelector(".priority-btn");
           priorityBtn.appendChild(star);
 
-          taskId++;
           tasksContainer.appendChild(taskDiv);
         }
       });
     });
   } else if (selection.classList[1] === "option-3") {
-    let taskId = 0;
     list.forEach((project) => {
       project.todolist.forEach((task) => {
         let todayDate = new Date();
         let next7days = todayDate.setDate(todayDate.getDate() + 7);
         if (task.dueDate <= next7days) {
           taskFound = true;
-          task.id = taskId;
+
           const taskDiv = document.createElement("div");
           taskDiv.classList.add("task");
-          taskDiv.id = `${taskId}`;
+          taskDiv.id = `${task.id}`;
           taskDiv.innerHTML = `<div>
-                          <input type="checkbox" name="" id=${taskId}>
+                          <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
                             <h5>${task.title}</h5>
                             <p>${task.description}</p>
@@ -152,13 +153,19 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button class="priority-btn ${taskId}"></button>
+                          <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
-                            <div class="task-popup task-popup-${taskId}">
-                              <button class="edit-task task-${taskId}">Edit</button>
-                              <button class="delete-task task-${taskId}">Delete</button>
+                            <div class="task-popup task-popup-${task.id}">
+                              <button class="edit-task task-${
+                                task.id
+                              }">Edit</button>
+                              <button class="delete-task task-${
+                                task.id
+                              }">Delete</button>
                             </div>
-                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                            <i class="edit-task-btn ${
+                              task.id
+                            } fa-solid fa-ellipsis-vertical"></i>
                           </div>   
                          </div>`;
           const star = document.createElement("i");
@@ -171,23 +178,21 @@ const renderTasks = (selection, list) => {
           const priorityBtn = taskDiv.querySelector(".priority-btn");
           priorityBtn.appendChild(star);
 
-          taskId++;
           tasksContainer.appendChild(taskDiv);
         }
       });
     });
   } else if (selection.classList[1] === "option-4") {
-    let taskId = 0;
     list.forEach((project) => {
       project.todolist.forEach((task) => {
         if (task.hasPriority) {
           taskFound = true;
-          task.id = taskId;
+
           const taskDiv = document.createElement("div");
           taskDiv.classList.add("task");
-          taskDiv.id = `${taskId}`;
+          taskDiv.id = `${task.id}`;
           taskDiv.innerHTML = `<div>
-                          <input type="checkbox" name="" id=${taskId}>
+                          <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
                             <h5>${task.title}</h5>
                             <p>${task.description}</p>
@@ -195,13 +200,19 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button class="priority-btn ${taskId}"></button>
+                          <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
-                            <div class="task-popup task-popup-${taskId}">
-                              <button class="edit-task task-${taskId}">Edit</button>
-                              <button class="delete-task task-${taskId}">Delete</button>
+                            <div class="task-popup task-popup-${task.id}">
+                              <button class="edit-task task-${
+                                task.id
+                              }">Edit</button>
+                              <button class="delete-task task-${
+                                task.id
+                              }">Delete</button>
                             </div>
-                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                            <i class="edit-task-btn ${
+                              task.id
+                            } fa-solid fa-ellipsis-vertical"></i>
                           </div>   
                          </div>`;
           const star = document.createElement("i");
@@ -214,23 +225,21 @@ const renderTasks = (selection, list) => {
           const priorityBtn = taskDiv.querySelector(".priority-btn");
           priorityBtn.appendChild(star);
 
-          taskId++;
           tasksContainer.appendChild(taskDiv);
         }
       });
     });
   } else if (selection.classList[0] === "project-btn") {
-    let taskId = 0;
     list.forEach((project) => {
       if (project.id == selection.classList[1]) {
         project.todolist.forEach((task) => {
           taskFound = true;
-          task.id = taskId;
+
           const taskDiv = document.createElement("div");
           taskDiv.classList.add("task");
-          taskDiv.id = `${taskId}`;
+          taskDiv.id = `${task.id}`;
           taskDiv.innerHTML = `<div>
-                          <input type="checkbox" name="" id=${taskId}>
+                          <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
                             <h5>${task.title}</h5>
                             <p>${task.description}</p>
@@ -238,13 +247,19 @@ const renderTasks = (selection, list) => {
                          </div>
                          <div>
                           <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-                          <button class="priority-btn ${taskId}"></button>
+                          <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
-                            <div class="task-popup task-popup-${taskId}">
-                              <button class="edit-task task-${taskId}">Edit</button>
-                              <button class="delete-task task-${taskId}">Delete</button>
+                            <div class="task-popup task-popup-${task.id}">
+                              <button class="edit-task task-${
+                                task.id
+                              }">Edit</button>
+                              <button class="delete-task task-${
+                                task.id
+                              }">Delete</button>
                             </div>
-                            <i class="edit-task-btn ${taskId} fa-solid fa-ellipsis-vertical"></i>
+                            <i class="edit-task-btn ${
+                              task.id
+                            } fa-solid fa-ellipsis-vertical"></i>
                           </div>   
                          </div>`;
           const star = document.createElement("i");
@@ -257,7 +272,6 @@ const renderTasks = (selection, list) => {
           const priorityBtn = taskDiv.querySelector(".priority-btn");
           priorityBtn.appendChild(star);
 
-          taskId++;
           tasksContainer.appendChild(taskDiv);
         });
         renderAddTaskBtn(project.id);
