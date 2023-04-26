@@ -1,5 +1,3 @@
-// local save feature branch
-
 import todoFactory from "./todoFactory";
 import projectFactory from "./projectFactory";
 import {
@@ -7,8 +5,8 @@ import {
   changeContentTitle,
   renderProjectsList,
   renderTasks,
-  renderRenameProjectForm,
 } from "./domManipulation";
+import "./style.css";
 
 const hideSidebarBtn = document.querySelector(".sidebar-btn");
 const allTaskBtn = document.querySelector(".option-1");
@@ -49,7 +47,6 @@ if (localStorage.length == 0) {
 
 function updateStorage() {
   localStorage.setItem("projects", JSON.stringify(projectsList));
-  console.log(projectsList);
 }
 
 function retrieveData() {
@@ -164,7 +161,6 @@ function nameAlreadyUsed(newName) {
 function createProject(name) {
   projectsList.push(projectFactory(name, `project-${projectId}`));
   projectId++;
-  console.log(projectId);
   updateStorage();
 }
 
