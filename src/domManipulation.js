@@ -67,6 +67,7 @@ const renderTasks = (selection, list) => {
           task.dueDate,
           "dd/MM/yyyy"
         )}</div>
+                          <input type="date" class="date-picker ${task.id}">
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -122,6 +123,7 @@ const renderTasks = (selection, list) => {
             task.dueDate,
             "dd/MM/yyyy"
           )}</div>
+                          <input type="date" class="date-picker ${task.id}">
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -178,6 +180,7 @@ const renderTasks = (selection, list) => {
             task.dueDate,
             "dd/MM/yyyy"
           )}</div>
+                          <input type="date" class="date-picker ${task.id}">
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -232,6 +235,7 @@ const renderTasks = (selection, list) => {
             task.dueDate,
             "dd/MM/yyyy"
           )}</div>
+                          <input type="date" class="date-picker ${task.id}">
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -286,6 +290,7 @@ const renderTasks = (selection, list) => {
             task.dueDate,
             "dd/MM/yyyy"
           )}</div>
+                          <input type="date" class="date-picker ${task.id}">
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -336,23 +341,5 @@ function renderAddTaskBtn(id) {
                           <span>Add Task</span>`;
   contentDiv.appendChild(addTaskBtn);
 }
-
-// for a later time
-const renderRenameProjectForm = (e) => {
-  console.log(e.target.classList[1]);
-  const projectBtn = document.querySelector(
-    `.project-btn.${e.target.classList[1]}`
-  );
-  const previousName = projectBtn.querySelector(".project-name").textContent;
-  projectBtn.innerHTML = `
-                          <form action="" method="post" class="rename-project-form ${e.target.classList[1]}">
-                            <label for="projectNameInput"><i class="fa-solid fa-bars fa-lg"></i></label>
-                            <input type="text" name="projectNameInput" id="projectNameInput" value="${previousName}" required>
-                            <div>
-                              <button id="submit-project" type="submit">Rename</button>
-                              <button class="close-project-form">Cancel</button>
-                            </div>
-                          </form>`;
-};
 
 export { hideSidebar, changeContentTitle, renderProjectsList, renderTasks };

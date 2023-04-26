@@ -46,6 +46,7 @@ addEventListenersOnEditTasks();
 addEventListenerOnDeleteTaskBtns();
 addEventListenerOnTasksTitles();
 addEventListenerOnTasksDetails();
+addEventListenersOnTasksDates();
 
 // switch content pressing menu buttons
 sidebarOptions.forEach((option) => {
@@ -57,6 +58,7 @@ sidebarOptions.forEach((option) => {
     addEventListenerOnDeleteTaskBtns();
     addEventListenerOnTasksTitles();
     addEventListenerOnTasksDetails();
+    addEventListenersOnTasksDates();
   });
 });
 
@@ -80,6 +82,7 @@ function refreshContent() {
   addEventListenerOnDeleteTaskBtns();
   addEventListenerOnTasksTitles();
   addEventListenerOnTasksDetails();
+  addEventListenersOnTasksDates();
 }
 
 // open the form to type the new project's name
@@ -141,6 +144,7 @@ function addEventListenerOnProjectsBtns() {
       addEventListenerOnDeleteTaskBtns();
       addEventListenerOnTasksTitles();
       addEventListenerOnTasksDetails();
+      addEventListenersOnTasksDates();
       addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
       openAddTaskForm();
       closeAddTaskForm();
@@ -243,6 +247,7 @@ addTaskForm.addEventListener("submit", (e) => {
   addEventListenerOnDeleteTaskBtns();
   addEventListenerOnTasksTitles();
   addEventListenerOnTasksDetails();
+  addEventListenersOnTasksDates();
   addTaskForm.reset();
   openAddTaskForm();
 });
@@ -256,10 +261,8 @@ function addEventListenerOnPriorityBtns() {
           if (task.id == btn.classList[1]) {
             if (task.hasPriority) {
               task.hasPriority = false;
-              console.log("set off");
             } else {
               task.hasPriority = true;
-              console.log("set on");
             }
           }
         });
@@ -338,7 +341,6 @@ function modifyTitle(title) {
     project.todolist.forEach((task) => {
       if (title.classList[1] == task.id) {
         task.title = title.innerHTML;
-        console.log(task);
       }
     });
   });
@@ -358,10 +360,42 @@ function modifyDetails(detail) {
     project.todolist.forEach((task) => {
       if (detail.classList[1] == task.id) {
         task.description = detail.innerHTML;
+      }
+    });
+  });
+}
+
+function addEventListenersOnTasksDates() {
+  const dates = document.querySelectorAll(".task-date");
+  const datePickers = document.querySelectorAll(".date-picker");
+  dates.forEach((date) => {
+    date.addEventListener("click", () => {
+      date.style.display = "none";
+      datePickers.forEach((datePicker) => {
+        if (datePicker.classList[1] === date.classList[1]) {
+          datePicker.style.display = "block";
+          datePicker.addEventListener("change", () => {
+            console.log("change event fired");
+            modifyDate(datePicker);
+            date.style.display = "block";
+            refreshContent();
+          });
+        }
+      });
+    });
+  });
+}
+
+function modifyDate(datePicker) {
+  projectsList.forEach((project) => {
+    project.todolist.forEach((task) => {
+      if (task.id == datePicker.classList[1]) {
+        task.dueDate = new Date(datePicker.value);
         console.log(task);
       }
     });
   });
+  datePicker.style.display = "none";
 }
 
 // elements that change
@@ -372,7 +406,7 @@ let deleteProjectBtns = document.querySelectorAll(".delete-project");
 
 addEventListenerOnProjectsBtns();
 addEventListenersOnEditProjects();
-addEventListenerOnPriorityBtns();
-addEventListenersOnEditTasks();
-addEventListenerOnDeleteTaskBtns();
+// addEventListenerOnPriorityBtns();
+// addEventListenersOnEditTasks();
+// addEventListenerOnDeleteTaskBtns();
 addEventListenerOnDeleteProjectsBtns();
