@@ -1,7 +1,7 @@
 let tasksCounter = 0;
 
 const projectFactory = (name, id) => {
-  const todolist = [];
+  let todolist = [];
   const addTodo = (todoItem) => {
     todoItem.project = name;
     todoItem.id = tasksCounter;

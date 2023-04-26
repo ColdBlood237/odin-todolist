@@ -1,3 +1,5 @@
+// local save feature branch
+
 import todoFactory from "./todoFactory";
 import projectFactory from "./projectFactory";
 import {
@@ -23,7 +25,7 @@ let editTaskBtns = document.querySelectorAll(".edit-task-btn");
 let tasksPopups = document.querySelectorAll(".task-popup");
 let deleteTasksBtns = document.querySelectorAll(".delete-task");
 
-const projectsList = [];
+let projectsList = [];
 
 const defaultTask = todoFactory("some title", "some description", Date.now());
 const testTask = todoFactory("test", "test details", new Date("2017-01-26"));
@@ -36,6 +38,38 @@ testProject.addTodo(testTask);
 
 projectsList.push(defaultProject);
 projectsList.push(testProject);
+
+let projectId = 2;
+
+if (localStorage.length == 0) {
+  updateStorage();
+} else {
+  retrieveData();
+}
+
+function updateStorage() {
+  localStorage.setItem("projects", JSON.stringify(projectsList));
+  console.log(projectsList);
+}
+
+function retrieveData() {
+  const jsonProjectsList = JSON.parse(localStorage.getItem("projects"));
+  projectsList = [];
+  projectId = 0;
+  for (let i = 0; i < jsonProjectsList.length; i++) {
+    projectsList[i] = projectFactory(
+      jsonProjectsList[i].name,
+      `project-${projectId}`
+    );
+    projectId++;
+    projectsList[i].todolist = jsonProjectsList[i].todolist;
+    for (let j = 0; j < projectsList[i].todolist.length; j++) {
+      projectsList[i].todolist[j].dueDate = new Date(
+        projectsList[i].todolist[j].dueDate
+      );
+    }
+  }
+}
 
 hideSidebarBtn.addEventListener("click", hideSidebar);
 
@@ -127,10 +161,11 @@ function nameAlreadyUsed(newName) {
   }
 }
 
-let projectId = 2;
 function createProject(name) {
   projectsList.push(projectFactory(name, `project-${projectId}`));
   projectId++;
+  console.log(projectId);
+  updateStorage();
 }
 
 let addTaskFormIsOpen = false;
@@ -189,6 +224,7 @@ function addEventListenerOnDeleteProjectsBtns() {
       for (let i = 0; i < projectsList.length; i++) {
         if (projectsList[i].id === btn.classList[1]) {
           projectsList.splice(i, 1);
+          updateStorage();
         }
       }
 
@@ -235,6 +271,7 @@ addTaskForm.addEventListener("submit", (e) => {
   projectsList.forEach((project) => {
     if (project.id === addTaskForm.classList[1]) {
       project.addTodo(newTask);
+      updateStorage();
     }
   });
   addTaskForm.style.display = "none";
@@ -264,6 +301,7 @@ function addEventListenerOnPriorityBtns() {
             } else {
               task.hasPriority = true;
             }
+            updateStorage();
           }
         });
       });
@@ -322,6 +360,7 @@ function deleteTask(btn) {
     project.todolist.forEach((task) => {
       if (btn.classList[1] === `task-${task.id}`) {
         project.removeTodo(task);
+        updateStorage();
         refreshContent();
       }
     });
@@ -342,6 +381,7 @@ function modifyTitle(title) {
       if (title.classList[1] == task.id) {
         task.title = title.innerHTML;
       }
+      updateStorage();
     });
   });
 }
@@ -361,6 +401,7 @@ function modifyDetails(detail) {
       if (detail.classList[1] == task.id) {
         task.description = detail.innerHTML;
       }
+      updateStorage();
     });
   });
 }
@@ -375,7 +416,6 @@ function addEventListenersOnTasksDates() {
         if (datePicker.classList[1] === date.classList[1]) {
           datePicker.style.display = "block";
           datePicker.addEventListener("change", () => {
-            console.log("change event fired");
             modifyDate(datePicker);
             date.style.display = "block";
             refreshContent();
@@ -391,8 +431,8 @@ function modifyDate(datePicker) {
     project.todolist.forEach((task) => {
       if (task.id == datePicker.classList[1]) {
         task.dueDate = new Date(datePicker.value);
-        console.log(task);
       }
+      updateStorage();
     });
   });
   datePicker.style.display = "none";
