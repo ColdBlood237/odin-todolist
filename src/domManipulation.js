@@ -54,12 +54,19 @@ const renderTasks = (selection, list) => {
         taskDiv.innerHTML = `<div>
                           <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
-                            <h5>${task.title}</h5>
-                            <p>${task.description}</p>
+                            <h5 class="task-title ${
+                              task.id
+                            }" contenteditable="true">${task.title}</h5>
+                            <p class="task-details ${
+                              task.id
+                            }" contenteditable="true">${task.description}</p>
                           </div>
                          </div>
                          <div>
-                          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
+                          <div class="task-date ${task.id}">${format(
+          task.dueDate,
+          "dd/MM/yyyy"
+        )}</div>
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -100,25 +107,36 @@ const renderTasks = (selection, list) => {
           taskDiv.classList.add("task");
           taskDiv.id = `${task.id}`;
           taskDiv.innerHTML = `<div>
-          <input type="checkbox" name="" id=${task.id}>
-          <div class="task-text">
-            <h5>${task.title}</h5>
-            <p>${task.description}</p>
-          </div>
-         </div>
-         <div>
-          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
-          <button class="priority-btn ${task.id}"></button>
-          <div class="edit-task-container">
-            <div class="task-popup task-popup-${task.id}">
-              <button class="edit-task task-${task.id}">Edit</button>
-              <button class="delete-task task-${task.id}">Delete</button>
-            </div>
-            <i class="edit-task-btn ${
-              task.id
-            } fa-solid fa-ellipsis-vertical"></i>
-          </div>   
-         </div>`;
+                          <input type="checkbox" name="" id=${task.id}>
+                          <div class="task-text">
+                            <h5 class="task-title ${
+                              task.id
+                            }" contenteditable="true">${task.title}</h5>
+                            <p class="task-details ${
+                              task.id
+                            }" contenteditable="true">${task.description}</p>
+                          </div>
+                         </div>
+                         <div>
+                          <div class="task-date ${task.id}">${format(
+            task.dueDate,
+            "dd/MM/yyyy"
+          )}</div>
+                          <button class="priority-btn ${task.id}"></button>
+                          <div class="edit-task-container">
+                            <div class="task-popup task-popup-${task.id}">
+                              <button class="edit-task task-${
+                                task.id
+                              }">Edit</button>
+                              <button class="delete-task task-${
+                                task.id
+                              }">Delete</button>
+                            </div>
+                            <i class="edit-task-btn ${
+                              task.id
+                            } fa-solid fa-ellipsis-vertical"></i>
+                          </div>   
+                         </div>`;
           const star = document.createElement("i");
           if (task.hasPriority) {
             star.classList.add(...["fa-solid", "fa-star"]);
@@ -147,12 +165,19 @@ const renderTasks = (selection, list) => {
           taskDiv.innerHTML = `<div>
                           <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
-                            <h5>${task.title}</h5>
-                            <p>${task.description}</p>
+                            <h5 class="task-title ${
+                              task.id
+                            }" contenteditable="true">${task.title}</h5>
+                            <p class="task-details ${
+                              task.id
+                            }" contenteditable="true">${task.description}</p>
                           </div>
                          </div>
                          <div>
-                          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
+                          <div class="task-date ${task.id}">${format(
+            task.dueDate,
+            "dd/MM/yyyy"
+          )}</div>
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -194,12 +219,19 @@ const renderTasks = (selection, list) => {
           taskDiv.innerHTML = `<div>
                           <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
-                            <h5>${task.title}</h5>
-                            <p>${task.description}</p>
+                            <h5 class="task-title ${
+                              task.id
+                            }" contenteditable="true">${task.title}</h5>
+                            <p class="task-details ${
+                              task.id
+                            }" contenteditable="true">${task.description}</p>
                           </div>
                          </div>
                          <div>
-                          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
+                          <div class="task-date ${task.id}">${format(
+            task.dueDate,
+            "dd/MM/yyyy"
+          )}</div>
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">
@@ -241,12 +273,19 @@ const renderTasks = (selection, list) => {
           taskDiv.innerHTML = `<div>
                           <input type="checkbox" name="" id=${task.id}>
                           <div class="task-text">
-                            <h5>${task.title}</h5>
-                            <p>${task.description}</p>
+                            <h5 class="task-title ${
+                              task.id
+                            }" contenteditable="true">${task.title}</h5>
+                            <p class="task-details ${
+                              task.id
+                            }" contenteditable="true">${task.description}</p>
                           </div>
                          </div>
                          <div>
-                          <div>${format(task.dueDate, "dd/MM/yyyy")}</div>
+                          <div class="task-date ${task.id}">${format(
+            task.dueDate,
+            "dd/MM/yyyy"
+          )}</div>
                           <button class="priority-btn ${task.id}"></button>
                           <div class="edit-task-container">
                             <div class="task-popup task-popup-${task.id}">

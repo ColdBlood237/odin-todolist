@@ -351,3 +351,13 @@ h3:nth-child(7) {
 .priority-btn {
   border-radius: 4px;
 }
+
+*[contenteditable="true"] {
+  cursor: pointer;
+}
+
+*[contenteditable="true"]:focus {
+  outline: 0;
+  background-color: lightblue;
+  border-radius: 4px;
+}

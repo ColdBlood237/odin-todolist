@@ -44,6 +44,8 @@ renderTasks("initialize", projectsList);
 addEventListenerOnPriorityBtns();
 addEventListenersOnEditTasks();
 addEventListenerOnDeleteTaskBtns();
+addEventListenerOnTasksTitles();
+addEventListenerOnTasksDetails();
 
 // switch content pressing menu buttons
 sidebarOptions.forEach((option) => {
@@ -53,6 +55,8 @@ sidebarOptions.forEach((option) => {
     addEventListenerOnPriorityBtns();
     addEventListenersOnEditTasks();
     addEventListenerOnDeleteTaskBtns();
+    addEventListenerOnTasksTitles();
+    addEventListenerOnTasksDetails();
   });
 });
 
@@ -74,6 +78,8 @@ function refreshContent() {
   addEventListenerOnPriorityBtns();
   addEventListenersOnEditTasks();
   addEventListenerOnDeleteTaskBtns();
+  addEventListenerOnTasksTitles();
+  addEventListenerOnTasksDetails();
 }
 
 // open the form to type the new project's name
@@ -133,6 +139,8 @@ function addEventListenerOnProjectsBtns() {
       addEventListenerOnPriorityBtns();
       addEventListenersOnEditTasks();
       addEventListenerOnDeleteTaskBtns();
+      addEventListenerOnTasksTitles();
+      addEventListenerOnTasksDetails();
       addTaskForm.classList.replace(addTaskForm.classList[1], btn.classList[1]);
       openAddTaskForm();
       closeAddTaskForm();
@@ -214,7 +222,10 @@ function closeAddTaskForm() {
 addTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const taskTitle = addTaskForm.querySelector("#title").value;
-  const taskDetails = addTaskForm.querySelector("#details").value;
+  let taskDetails = addTaskForm.querySelector("#details").value;
+  if (taskDetails === "") {
+    taskDetails = "No details...";
+  }
   const taskDueDate = new Date(addTaskForm.querySelector("#date").value);
   const newTask = todoFactory(taskTitle, taskDetails, taskDueDate);
   projectsList.forEach((project) => {
@@ -230,6 +241,8 @@ addTaskForm.addEventListener("submit", (e) => {
   addEventListenerOnPriorityBtns();
   addEventListenersOnEditTasks();
   addEventListenerOnDeleteTaskBtns();
+  addEventListenerOnTasksTitles();
+  addEventListenerOnTasksDetails();
   addTaskForm.reset();
   openAddTaskForm();
 });
@@ -307,6 +320,45 @@ function deleteTask(btn) {
       if (btn.classList[1] === `task-${task.id}`) {
         project.removeTodo(task);
         refreshContent();
+      }
+    });
+  });
+}
+
+function addEventListenerOnTasksTitles() {}
+const tasksTitles = document.querySelectorAll(".task-title");
+tasksTitles.forEach((title) => {
+  title.addEventListener("blur", () => {
+    modifyTitle(title);
+  });
+});
+
+function modifyTitle(title) {
+  projectsList.forEach((project) => {
+    project.todolist.forEach((task) => {
+      if (title.classList[1] == task.id) {
+        task.title = title.innerHTML;
+        console.log(task);
+      }
+    });
+  });
+}
+
+function addEventListenerOnTasksDetails() {
+  const tasksDetails = document.querySelectorAll(".task-details");
+  tasksDetails.forEach((detail) => {
+    detail.addEventListener("blur", () => {
+      modifyDetails(detail);
+    });
+  });
+}
+
+function modifyDetails(detail) {
+  projectsList.forEach((project) => {
+    project.todolist.forEach((task) => {
+      if (detail.classList[1] == task.id) {
+        task.description = detail.innerHTML;
+        console.log(task);
       }
     });
   });
