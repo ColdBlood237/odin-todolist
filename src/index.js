@@ -39,7 +39,7 @@ projectsList.push(testProject);
 
 let projectId = 2;
 
-if (localStorage.length == 0) {
+if (localStorage.getItem("projects") === null) {
   updateStorage();
 } else {
   retrieveData();
